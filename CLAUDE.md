@@ -33,9 +33,11 @@ menu_vinotrh.eshop/
 │   └── images/logo/vinotrh_logo.png
 └── docs/
     ├── napojovy-listek-zdroj-2026-05.pdf   # Zdrojový PDF lístek (květen 2026) — z něj vychází obsah
-    └── qr/
-        ├── qr-menu-vinotrh.png   # QR kód → https://menu.vinotrh.cz (1200×1200, tisk)
-        └── qr-menu-vinotrh.svg   # Stejný QR kód jako vektor
+    ├── qr/
+    │   ├── qr-menu-vinotrh.png   # QR kód → https://menu.vinotrh.cz (1200×1200, tisk)
+    │   └── qr-menu-vinotrh.svg   # Stejný QR kód jako vektor
+    ├── stolni-karticka-print.html   # Zdrojová šablona stolní kartičky (tisk)
+    └── stolni-karticka.pdf          # Vygenerovaná stolní kartička A5 — tisk/odeslání do tiskárny
 ```
 
 ## QR kód
@@ -43,6 +45,25 @@ Vygenerován lokálně (`npx qrcode`, error correction H, barvy `#1E1F21` na bí
 ```
 npx qrcode -o docs/qr/qr-menu-vinotrh.png -t png -e H -w 1200 -q 2 -d 1E1F21FF -l FFFFFFFF "https://menu.vinotrh.cz"
 ```
+
+## Stolní kartička (table tent)
+`docs/stolni-karticka.pdf` — QR kartička na stůl, formát A5 na výšku (148×210 mm), určená k **přeložení na půl vodorovně** — vznikne tak stojící „stan" o rozměru cca 148×105 mm, čitelný z obou stran. Horní panel je v normální orientaci, spodní panel je otočený o 180°, aby po přeložení četl správně z druhé strany. Přerušovaná olivová čára uprostřed = vodítko pro přeložení.
+
+Obsah panelu: značka Vinotrh (kruhový grape mark), wordmark „ENOTÉKA znojemských vín", QR kód, „Naskenujte pro nápojový lístek", `menu.vinotrh.cz`, adresa.
+
+Regenerace po úpravě `stolni-karticka-print.html` — Playwright (headless Chromium), ad-hoc skript (není součástí repa):
+```js
+const { chromium } = require('playwright');
+const path = require('path');
+(async () => {
+  const browser = await chromium.launch();
+  const page = await browser.newPage();
+  await page.goto('file:///' + path.resolve('docs/stolni-karticka-print.html').split(path.sep).join('/'), { waitUntil: 'networkidle' });
+  await page.pdf({ path: 'docs/stolni-karticka.pdf', width: '148mm', height: '210mm', printBackground: true, margin: { top: '0', right: '0', bottom: '0', left: '0' } });
+  await browser.close();
+})();
+```
+Spuštění: `NODE_PATH="$(npm root -g)" node gen_pdf.js` (Playwright je nainstalovaný globálně).
 Pozn.: projekt vědomě nepoužívá `data/`/`output`/`src/` z obecné PARA konvence workspace — je to jednoduchý statický web nasazovaný na Vercel z kořene repozitáře, struktura kopíruje sesterský `auto_vinotrh.eshop`.
 
 ## Barevná paleta (z vinotrh.cz/enoteka — ne z Wine Trucku)
