@@ -12,8 +12,10 @@ Design vychází ze **skutečné vizuální identity vinotrh.cz/enoteka** (ne z 
 - Deploy: Vercel (auto-deploy z GitHub)
 
 ## Deploy & URL
-- Produkční doména: **menu.vinotrh.cz** (zatím nenastaveno — DNS CNAME + Vercel doména potřeba doplnit)
-- Workflow: `git push` → Vercel automaticky deployuje (stejný postup jako u `auto_vinotrh.eshop`)
+- GitHub: https://github.com/ssatek/menu-vinotrh-eshop
+- Vercel: https://menuvinotrheshop.vercel.app
+- Produkční doména: https://menu.vinotrh.cz — doména přidaná do Vercel projektu, čeká na DNS `A menu.vinotrh.cz → 76.76.21.21` u Websupportu (stejný postup jako `truck.vinotrh.cz`)
+- Workflow: `git push` → Vercel automaticky deployuje (GitHub repo propojen s Vercel projektem)
 
 ## Spuštění
 Otevřít `index.html` přímo v prohlížeči nebo přes live server:
