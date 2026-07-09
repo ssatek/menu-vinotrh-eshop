@@ -32,7 +32,16 @@ menu_vinotrh.eshop/
 │   ├── js/main.js             # Scroll-spy pro quick-nav (zvýraznění aktivní kategorie)
 │   └── images/logo/vinotrh_logo.png
 └── docs/
-    └── napojovy-listek-zdroj-2026-05.pdf   # Zdrojový PDF lístek (květen 2026) — z něj vychází obsah
+    ├── napojovy-listek-zdroj-2026-05.pdf   # Zdrojový PDF lístek (květen 2026) — z něj vychází obsah
+    └── qr/
+        ├── qr-menu-vinotrh.png   # QR kód → https://menu.vinotrh.cz (1200×1200, tisk)
+        └── qr-menu-vinotrh.svg   # Stejný QR kód jako vektor
+```
+
+## QR kód
+Vygenerován lokálně (`npx qrcode`, error correction H, barvy `#1E1F21` na bílé), ověřen dekódováním přes OpenCV — odpovídá přesně `https://menu.vinotrh.cz`. Pro regeneraci (např. po změně domény):
+```
+npx qrcode -o docs/qr/qr-menu-vinotrh.png -t png -e H -w 1200 -q 2 -d 1E1F21FF -l FFFFFFFF "https://menu.vinotrh.cz"
 ```
 Pozn.: projekt vědomě nepoužívá `data/`/`output`/`src/` z obecné PARA konvence workspace — je to jednoduchý statický web nasazovaný na Vercel z kořene repozitáře, struktura kopíruje sesterský `auto_vinotrh.eshop`.
 
