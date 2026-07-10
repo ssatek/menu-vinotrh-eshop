@@ -18,6 +18,7 @@ Hlavička používá **skutečné vektorové logo Enotéky** (ne textovou aproxi
 - Vercel: https://menuvinotrheshop.vercel.app
 - Produkční doména: https://menu.vinotrh.cz — DNS propagováno (CNAME na Websupport), doména živá, SSL aktivní
 - Workflow: `git push` → Vercel automaticky deployuje (GitHub repo propojen s Vercel projektem)
+- **Vercel Web Analytics:** zapnuto (`npx vercel project web-analytics`), tracking script `/_vercel/insights/script.js` v `index.html` — ověřeno na produkci (200).
 
 ## Spuštění
 Otevřít `index.html` přímo v prohlížeči nebo přes live server:
